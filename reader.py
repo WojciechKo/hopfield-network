@@ -21,5 +21,11 @@ def _parse_patterns(pattern_size, patterns_lines):
 def _parse_pattern(pattern_size, pattern_lines):
 	label = pattern_lines[0]
 	pattern = pattern_lines[1:pattern_size + LABEL_SIZE]
+	return { label: _to_sgn(pattern_size, pattern) }
 
-	return { label: pattern }
+def _to_sgn(pattern_size, pattern_lines):
+	result = np.full((pattern_size, pattern_size), -1)
+	for row_idx, row in enumerate(pattern_lines):
+		for col_idx, char in enumerate(row):
+			if char != ' ': result[row_idx][col_idx] = 1
+	return result
