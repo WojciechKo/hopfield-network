@@ -1,5 +1,7 @@
 import tkinter as tk
 import numpy as np
+from hopfield import Hopfield
+from reader import Reader
 
 class PatternGrid(tk.Frame):
     def __init__(self, master=None, size=8):
@@ -8,7 +10,7 @@ class PatternGrid(tk.Frame):
         [self._init_cell(row, column) for row in range(size) for column in range(size)]
 
     def state(self):
-        return np.vectorize(lambda v: v.get())(self.grid)
+        return np.vectorize(lambda v: -1 if v.get() == 0 else v.get())(self.grid)
 
     def clear(self):
         [value.set(0) for value in self.grid.flat]
@@ -32,7 +34,7 @@ class NewPattern(tk.Frame):
 
     def _save_pattern(self):
         print(self.pattern_grid.state())
-        # save_pattern_here
+        hopfield.recall(self.pattern_grid.state())
         self.pattern_grid.clear()
 
 class PatternList(tk.Frame):
@@ -74,6 +76,9 @@ class Application(tk.Frame):
 
         self.recall = Recall(master=self)
         self.recall.pack(side="right")
+
+patterns = Reader().patterns()
+hopfield = Hopfield(patterns['patterns'])
 
 root = tk.Tk()
 app = Application(master=root)
