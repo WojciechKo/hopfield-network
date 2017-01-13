@@ -3,7 +3,9 @@ import numpy as np
 class Hopfield:
     def __init__(self, patterns):
         self.patterns = {l: p.flatten() for l, p in patterns.items()}
+        self._train()
 
+    def _train(self):
         self.weights = np.zeros(self._pattern_size())
         for label, pattern in self.patterns.items():
             self.weights = self.weights + np.outer(pattern, pattern)
@@ -15,4 +17,8 @@ class Hopfield:
         return len(pattern)
 
     def recall(self, pattern):
-        return false
+        sgn = lambda x: -1 if x<0 else 1
+        new_pattern = np.zeros(pattern.flatten().shape)
+        for point_index in range(pattern.size):
+            new_pattern[point_index] = sgn(np.dot(pattern.flatten(),self.weights[point_index]))
+        return new_pattern.reshape(pattern.shape)

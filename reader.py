@@ -2,7 +2,9 @@ import numpy as np
 
 class Reader:
 	label_size = 1
-	file_name = 'patterns'
+
+	def __init__(self, file_name):
+		self.file_name = file_name
 
 	def patterns(self):
 		file = open(self.file_name, 'r')
