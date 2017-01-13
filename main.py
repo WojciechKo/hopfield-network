@@ -1,3 +1,5 @@
+import sys
+
 import tkinter as tk
 import numpy as np
 from hopfield import Hopfield
@@ -87,7 +89,10 @@ class Application(tk.Frame):
         # self.recall = Recall(master=self)
         # self.recall.pack(side="right")
 
-patterns = Reader('patterns').patterns()
+file_name = 'patterns' if not sys.argv[1] else sys.argv[1]
+print(file_name)
+print(sys.argv)
+patterns = Reader(file_name).patterns()
 hopfield = Hopfield(patterns['patterns'])
 
 root = tk.Tk()
