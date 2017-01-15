@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 class Hopfield:
     def __init__(self, patterns):
@@ -19,6 +20,8 @@ class Hopfield:
     def recall(self, pattern):
         sgn = lambda x: -1 if x<0 else 1
         new_pattern = np.zeros(pattern.flatten().shape)
-        for point_index in range(pattern.size):
+        points = list(range(pattern.size))
+        random.shuffle(points)
+        for point_index in points:
             new_pattern[point_index] = sgn(np.dot(pattern.flatten(),self.weights[point_index]))
         return new_pattern.reshape(pattern.shape)

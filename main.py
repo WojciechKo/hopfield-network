@@ -49,11 +49,14 @@ class NewPattern(tk.Frame):
         self.recall_pattern = tk.Button(self, text="Recall pattern", command=self._recall_pattern)
         self.recall_pattern.pack()
 
+        self.clear_grid = tk.Button(self, text="Clear grid", command=self._clear_grid)
+        self.clear_grid.pack()
+
     def _recall_pattern(self):
         new_pattern = hopfield.recall(self.pattern_grid.state())
         self.pattern_grid.set_state(new_pattern)
 
-    def _clean_pattern(self):
+    def _clear_grid(self):
         self.pattern_grid.clear()
 
 class Memory(tk.Frame):

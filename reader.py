@@ -8,10 +8,10 @@ class Reader:
 
 	def patterns(self):
 		file = open(self.file_name, 'r')
-		read_lines = file.read().splitlines()
-		lines = list(filter(None, read_lines))
+		lines = file.read().splitlines()
+		# lines = list(filter(None, read_lines))
 		self.pattern_size = int(lines[0])
-		patterns = self._parse_patterns(lines[1:])
+		patterns = self._parse_patterns(lines[2:])
 		return {'pattern_size': self.pattern_size, 'patterns': patterns}
 
 	def _parse_patterns(self, patterns_lines):
@@ -19,7 +19,9 @@ class Reader:
 		for i in range(0, len(patterns_lines), self.pattern_size + self.label_size):
 			pattern_lines = patterns_lines[i:i + self.pattern_size + self.label_size]
 			pattern = self._parse_pattern(pattern_lines)
+			print(pattern)
 			patterns.update(pattern)
+			# import pdb; pdb.set_trace()
 		return patterns
 
 	def _parse_pattern(self, pattern_lines):
