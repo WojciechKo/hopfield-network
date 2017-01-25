@@ -65,7 +65,8 @@ class NewPattern(tk.Frame):
         self.indicator.configure(text = self._indicator_text(False, ''))
 
     def _indicator_text(self, stable, name):
-        return "Stable: " + str(stable) + "\nPattern: " + name
+        n = str(name) if name else ''
+        return "Stable: " + str(stable) + "\nPattern: " + n
 
 class Memory(tk.Frame):
     def __init__(self, master, size):
