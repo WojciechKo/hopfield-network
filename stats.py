@@ -11,7 +11,8 @@ def generate_pattern(index, size):
     label = "pattern-" + str(index)
     return [label, generate_pattern_array(size)]
 
-def generate_patterns(patterns_count, size):
-    return dict([generate_pattern(i, s) for i, s in enumerate([size] * patterns_count)])
+def train_hopfield(patterns_count, size):
+    patterns = dict([generate_pattern(i, s) for i, s in enumerate([size] * patterns_count)])
+    return Hopfield(patterns)
 
-hopfield = Hopfield(generate_patterns(10, 10))
+hopfield = train_hopfield(10, 10))
