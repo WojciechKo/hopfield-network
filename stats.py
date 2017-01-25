@@ -7,12 +7,25 @@ def generate_pattern_array(size):
     pattern[pattern == 0] = -1
     return pattern
 
-def generate_pattern(index, size):
-    label = "pattern-" + str(index)
-    return [label, generate_pattern_array(size)]
+def generate_patterns(patterns_count, size):
+    generate_pattern = lambda i, s: ("pattern-" + str(i), generate_pattern_array(s))
+    return dict([generate_pattern(i, s) for i, s in enumerate([size] * patterns_count)])
 
-def train_hopfield(patterns_count, size):
-    patterns = dict([generate_pattern(i, s) for i, s in enumerate([size] * patterns_count)])
-    return Hopfield(patterns)
+patterns_count = 10
+pattern_size = 10
 
-hopfield = train_hopfield(10, 10))
+patterns = generate_patterns(patterns_count, pattern_size)
+hopfield = Hopfield(patterns)
+init_pattern = generate_pattern_array(pattern_size)
+
+new_pattern = init_pattern
+
+for i in range(10):
+    result = hopfield.recall(new_pattern)
+    new_pattern = result["pattern"]
+    stable = result["stable"]
+    name = result["name"]
+
+    print(new_pattern)
+    print(stable)
+    print(name)
