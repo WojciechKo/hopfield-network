@@ -24,4 +24,6 @@ class Hopfield:
         random.shuffle(points)
         for point_index in points:
             new_pattern[point_index] = sgn(np.dot(pattern.flatten(),self.weights[point_index]))
-        return {"pattern": new_pattern.reshape(pattern.shape)}
+        new_pattern = new_pattern.reshape(pattern.shape)
+        stable = np.array_equal(new_pattern, pattern)
+        return {"pattern": new_pattern.reshape(pattern.shape), "stable": stable}

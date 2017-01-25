@@ -52,12 +52,20 @@ class NewPattern(tk.Frame):
         self.clear_grid = tk.Button(self, text="Clear grid", command=self._clear_grid)
         self.clear_grid.pack()
 
+        self.indicator = tk.Label(self, text=self._indicator_text(False, ''), justify="left", anchor="w")
+        self.indicator.pack(expand=1, fill="both")
+
     def _recall_pattern(self):
         state = hopfield.recall(self.pattern_grid.state())
         self.pattern_grid.set_state(state["pattern"])
+        self.indicator.configure(text = self._indicator_text(state["stable"], ''))
 
     def _clear_grid(self):
         self.pattern_grid.clear()
+        self.indicator.configure(text = self._indicator_text(False, ''))
+
+    def _indicator_text(self, stable, pattern):
+        return "Stable: " + str(stable) + "\nPattern: " + pattern
 
 class Memory(tk.Frame):
     def __init__(self, master, size):
