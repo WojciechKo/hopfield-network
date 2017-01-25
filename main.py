@@ -53,8 +53,8 @@ class NewPattern(tk.Frame):
         self.clear_grid.pack()
 
     def _recall_pattern(self):
-        new_pattern = hopfield.recall(self.pattern_grid.state())
-        self.pattern_grid.set_state(new_pattern)
+        state = hopfield.recall(self.pattern_grid.state())
+        self.pattern_grid.set_state(state["pattern"])
 
     def _clear_grid(self):
         self.pattern_grid.clear()
