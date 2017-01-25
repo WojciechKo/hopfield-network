@@ -24,6 +24,14 @@ class Hopfield:
         random.shuffle(points)
         for point_index in points:
             new_pattern[point_index] = sgn(np.dot(pattern.flatten(),self.weights[point_index]))
+
+        name = self.find_in_patterns(new_pattern)
         new_pattern = new_pattern.reshape(pattern.shape)
         stable = np.array_equal(new_pattern, pattern)
-        return {"pattern": new_pattern.reshape(pattern.shape), "stable": stable}
+
+        return {"pattern": new_pattern, "stable": stable, "name": name}
+
+    def find_in_patterns(self, other_pattern):
+        for name, pattern in self.patterns.items():
+            if np.array_equal(pattern, other_pattern):
+                return name

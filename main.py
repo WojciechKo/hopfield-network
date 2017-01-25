@@ -58,14 +58,14 @@ class NewPattern(tk.Frame):
     def _recall_pattern(self):
         state = hopfield.recall(self.pattern_grid.state())
         self.pattern_grid.set_state(state["pattern"])
-        self.indicator.configure(text = self._indicator_text(state["stable"], ''))
+        self.indicator.configure(text = self._indicator_text(state["stable"], state["name"]))
 
     def _clear_grid(self):
         self.pattern_grid.clear()
         self.indicator.configure(text = self._indicator_text(False, ''))
 
-    def _indicator_text(self, stable, pattern):
-        return "Stable: " + str(stable) + "\nPattern: " + pattern
+    def _indicator_text(self, stable, name):
+        return "Stable: " + str(stable) + "\nPattern: " + name
 
 class Memory(tk.Frame):
     def __init__(self, master, size):
