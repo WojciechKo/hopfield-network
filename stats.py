@@ -35,11 +35,15 @@ def test_pattern(hopfield, name, pattern):
 
 def test_hopfield(hopfield):
     corruptions = np.arange(0, 0.5, 0.05)
-
-    for corruption in corruptions:
-        result = [test_pattern(hopfield, *corrupt_pattern(*pattern, corruption)) for pattern in hopfield.patterns.items()]
-        print("Corruption: " + '{:.1%}'.format(corruption), end="\t")
-        print("Result: " + '{:.1%}'.format(np.average(result)))
+    iterations = 5
+    results = np.empty((corruptions.size, 2))
+    for idx, corruption in enumerate(corruptions):
+        corruption_results = np.zeros(iterations)
+        for i in range(iterations):
+            result = [test_pattern(hopfield, *corrupt_pattern(*pattern, corruption)) for pattern in hopfield.patterns.items()]
+            corruption_results[i] = np.average(result)
+        results[idx] = [corruption, np.median(corruption_results)]
+    return results
 
 network_size = 900
 pattern_size = int(np.sqrt(network_size))
@@ -52,5 +56,8 @@ for fullness in network_fullness:
     patterns = generate_patterns(patterns_count, pattern_size)
     hopfield = Hopfield(patterns)
 
-    test_hopfield(hopfield)
+    results = test_hopfield(hopfield)
+    for corruption, result in results:
+        print("Corruption: " + '{:.1%}'.format(corruption), end="\t")
+        print("Result: " + '{:.1%}'.format(np.average(result)))
     print("\n")
