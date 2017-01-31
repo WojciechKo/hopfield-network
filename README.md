@@ -8,4 +8,4 @@ File contains patterns to be learned by hopfield network
 First line contains size of pattern then there are labels and patterns.
 
 ## Run
-`$ python3 main.py`
+`$ python3 main.py <patterns_file`
